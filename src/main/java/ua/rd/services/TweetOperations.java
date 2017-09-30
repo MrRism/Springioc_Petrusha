@@ -1,5 +1,6 @@
 package ua.rd.services;
 
+import java.util.List;
 import ua.rd.domain.Tweet;
 import ua.rd.domain.User;
 
@@ -13,9 +14,8 @@ public interface TweetOperations {
   int getLikeCount();
   int getReTweetCount();
   String getText();
-  Tweet reply(Tweet tweet);
-  void setMentions(User user);
-  User getMentions();
+  Tweet reply(User... users);
+  List<User> getMentions();
 
 
   void reTweet();

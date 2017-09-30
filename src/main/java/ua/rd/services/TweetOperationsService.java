@@ -1,5 +1,11 @@
 package ua.rd.services;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 import ua.rd.domain.Tweet;
 import ua.rd.domain.User;
 
@@ -16,7 +22,7 @@ public class TweetOperationsService implements TweetOperations {
   private String text;
 
 
-  private Tweet[] mentions;//?
+  private Set<User> mentions;//?
 
   public TweetOperationsService(Tweet tweet) {
 
@@ -54,20 +60,17 @@ public class TweetOperationsService implements TweetOperations {
     return null;
   }
 
-  public Tweet reply(Tweet tweet) {
+  public Tweet reply(User... users) {
+    mentions.addAll(Arrays.asList(users));
 
     return null;
   }
 
   @Override
-  public User getMentions() {
-    return null;
+  public List<User> getMentions() {
+    return new ArrayList<>(mentions);
   }
 
-  @Override
-  public void setMentions(User user) {
-
-  }
 
 
 }

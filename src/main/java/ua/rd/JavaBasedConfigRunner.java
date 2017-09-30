@@ -37,7 +37,6 @@ public class JavaBasedConfigRunner {
 
             tweet.getTweetOperations().like();
 
-
             System.out.println("[!]Tweet like count: " + tweet.getTweetOperations().getLikeCount());
 
         }
@@ -49,6 +48,8 @@ public class JavaBasedConfigRunner {
 
         }
         System.out.println("[!]Retweet count: " +subjectTweet1.getTweetOperations().getReTweetCount());
+
+
 
 
 
