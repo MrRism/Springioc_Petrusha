@@ -22,20 +22,45 @@ public class TimelineOperationsService implements TimelineOperations {
   private SimpleTweetService simpleTweetService;
 
   private User user;
-// user ??
+
 
   public TimelineOperationsService(Iterable<Tweet> tweets) {
     this.tweets = tweets;
+    for (Tweet tweet : tweets
+        ) {
+      if (user != null) {
+        if (tweet.getUser().equals(user)) {
+          addToTimeline(tweet);
+        }
+      }
+    }
   }
   // TODO to timeline do
 
   @Override
   public void twitting(String text) {
+    Tweet tweet = newTweet();
+    tweet.setTxt(text);
+    tweet.setUser(user);
+    tweet.setTweetOperations(newTweetOperations(tweet));
+    addToTimeline(tweet);
 
   }
 
   @Override
   public void reTwitting(String text, Tweet tweet) {
+
+    Tweet newTweet = newTweet();
+    tweet.getTweetOperations().reTweet();
+    newTweet.setTxt(
+        "ReTweet \""+
+            tweet.getTxt()+
+            "\" "
+            +text
+    );
+    newTweet.setUser(user);
+    newTweet.setTweetOperations(newTweetOperations(newTweet));
+    addToTimeline(newTweet);
 
   }
 
@@ -53,9 +78,20 @@ public class TimelineOperationsService implements TimelineOperations {
 
   }
 
-  protected void addToTimeline(Tweet tweet) {
+  private void addToTimeline(Tweet tweet) {
     userTimeline.add(tweet);
 
+  }
+
+  protected void setUser(User user) {
+    this.user = user;
+  }
+
+  protected Tweet newTweet(){
+    return null;
+  }
+  protected TweetOperations newTweetOperations(Tweet tweet){
+    return null;
   }
 
 //  public TimelineOperationsService(Iterable<Tweet> tweets) {

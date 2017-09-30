@@ -19,6 +19,7 @@ import ua.rd.repository.TweetRepository;
 import ua.rd.repository.UserRepository;
 import ua.rd.services.SimpleTweetService;
 import ua.rd.services.TimelineOperationsService;
+import ua.rd.services.TweetOperations;
 import ua.rd.services.TweetOperationsService;
 import ua.rd.services.TweetService;
 import ua.rd.services.UserOperationsService;
@@ -53,29 +54,21 @@ public class ServiceConfig {
   @Lazy
   public TimelineOperationsService timelineOperations(User user) {
     return new TimelineOperationsService(tweetRepository.allTweets()) {
-      @Override
-      public void twitting(String text) {
 
-        Tweet tweet = tweet();
-        tweet.setTxt(text);
-        tweet.setUser(user);
-        tweet.setTweetOperations(tweetOperations(tweet));
-        addToTimeline(tweet);
+
+
+
+      @Override
+      protected Tweet newTweet() {
+        setUser(user);
+        return tweet();
       }
 
       @Override
-      public void reTwitting(String text, Tweet tweet) {
-        tweet.getTweetOperations().reTweet();
-        Tweet newTweet = tweet();
-        newTweet.setTxt(
-            "ReTweet \""+
-            tweet.getTxt()+
-            "\" "
-            +text
-        );
-        newTweet.setUser(user);
-        newTweet.setTweetOperations(tweetOperations(newTweet));
-        addToTimeline(newTweet);
+      protected TweetOperations newTweetOperations(Tweet tweet)
+      {
+        setUser(user);
+        return tweetOperations(tweet);
       }
     };
   }
